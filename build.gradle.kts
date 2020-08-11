@@ -14,6 +14,10 @@ repositories {
 
 val vertxVersion = "4.0.0-milestone5"
 val arrowVersion = "0.10.5"
+val logbackVersion = "1.2.3"
+val slf4jVersion = "1.7.30"
+val logbackJacksonVersion = "0.1.5"
+val jacksonDatabindVersion = "2.11.2"
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
@@ -24,6 +28,13 @@ dependencies {
     implementation("io.arrow-kt:arrow-core:$arrowVersion")
     implementation("io.arrow-kt:arrow-syntax:$arrowVersion")
     implementation("io.arrow-kt:arrow-fx:$arrowVersion")
+
+    implementation("org.slf4j:slf4j-api:$slf4jVersion")
+    implementation("ch.qos.logback:logback-core:$logbackVersion")
+    implementation("ch.qos.logback:logback-classic:$logbackVersion")
+    implementation("ch.qos.logback.contrib:logback-jackson:$logbackJacksonVersion")
+    implementation("ch.qos.logback.contrib:logback-json-classic:$logbackJacksonVersion")
+    implementation("com.fasterxml.jackson.core:jackson-databind:$jacksonDatabindVersion")
 
     testImplementation("io.rest-assured:rest-assured:4.2.0")
     testImplementation("org.hamcrest.java-hamcrest:2.0.0.0")

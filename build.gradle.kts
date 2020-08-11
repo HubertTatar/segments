@@ -1,5 +1,8 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     kotlin("jvm") version "1.3.72"
+    id("org.jlleitschuh.gradle.ktlint") version "9.3.0"
 }
 
 group = "io.huta"
@@ -9,7 +12,7 @@ repositories {
     mavenCentral()
 }
 
-val vertxVersion = "3.9.2"
+val vertxVersion = "4.0.0-milestone5"
 val arrowVersion = "0.10.5"
 
 dependencies {
@@ -24,4 +27,9 @@ dependencies {
 
     testImplementation("io.rest-assured:rest-assured:4.2.0")
     testImplementation("org.hamcrest.java-hamcrest:2.0.0.0")
+}
+
+tasks.withType<KotlinCompile>().configureEach {
+    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.allWarningsAsErrors = true
 }

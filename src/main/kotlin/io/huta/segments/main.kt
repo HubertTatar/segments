@@ -1,6 +1,8 @@
 package io.huta.segments
 
+import io.huta.segments.config.ServerProperties
 import io.huta.segments.config.configRetriever
+import io.huta.segments.player.PlayerVerticle
 import io.netty.util.internal.logging.InternalLoggerFactory
 import io.netty.util.internal.logging.Slf4JLoggerFactory
 import io.vertx.core.DeploymentOptions
@@ -23,7 +25,8 @@ fun main() {
         val vertx = Vertx.vertx(VertxOptions(json.result()))
         serverRetriever.getConfig { server ->
             deploymentRetriever.getConfig { deployment ->
-                vertx.deployVerticle(TestVerticle(server.result()), DeploymentOptions(deployment.result()))
+                val serverProperties = ServerProperties.from(server.result())
+                vertx.deployVerticle(PlayerVerticle(serverProperties), DeploymentOptions(deployment.result()))
             }
         }
     }

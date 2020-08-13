@@ -4,6 +4,9 @@
     - take properties for verticle deployment/vertex/server from json files
     - use main router to define uris and subrouters to handle http methods
     
+### 2. Tests
+    - integration with Travis-CI
+    - tests in separated sourceSets integration and tests     
     
 ### Postman
     see collection/readme in postman dir    

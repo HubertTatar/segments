@@ -1,4 +1,4 @@
-# Segment app  [![Build Status](https://travis-ci.org/HubertTatar/Tickets.svg?branch=master)](https://travis-ci.org/HubertTatar/Tickets)
+# Segment app  [![Build Status](https://travis-ci.org/HubertTatar/segments.svg?branch=master)](https://travis-ci.org/HubertTatar/segments)
 
 ### 1. Vertx
     - take properties for verticle deployment/vertex/server from json files

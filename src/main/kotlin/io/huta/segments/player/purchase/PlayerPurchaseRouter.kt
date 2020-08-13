@@ -13,5 +13,4 @@ class PlayerPurchaseRouter(
         route("/").handler(BodyHandler.create())
         post("/").handler(playerPurchaseConfig.playerPurchasePost())
     }
-
 }

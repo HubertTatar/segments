@@ -18,6 +18,11 @@ val logbackVersion = "1.2.3"
 val slf4jVersion = "1.7.30"
 val logbackJacksonVersion = "0.1.5"
 val jacksonDatabindVersion = "2.11.2"
+val hamcrestVersion = "2.0.0.0"
+val junitRunnerVersion = "1.6.2"
+val junitVersion = "5.6.2"
+val restAssuredVersion = "4.2.0"
+
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
@@ -36,11 +41,40 @@ dependencies {
     implementation("ch.qos.logback.contrib:logback-json-classic:$logbackJacksonVersion")
     implementation("com.fasterxml.jackson.core:jackson-databind:$jacksonDatabindVersion")
 
-    testImplementation("io.rest-assured:rest-assured:4.2.0")
-    testImplementation("org.hamcrest.java-hamcrest:2.0.0.0")
+    testImplementation("org.junit.platform:junit-platform-runner:$junitRunnerVersion")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:$junitVersion")
+    testImplementation("io.rest-assured:rest-assured:$restAssuredVersion")
+    testImplementation("org.hamcrest:java-hamcrest:$hamcrestVersion")
 }
 
 tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions.jvmTarget = "1.8"
     kotlinOptions.allWarningsAsErrors = true
+}
+
+kotlin {
+    sourceSets {
+        val integration by creating {
+            resources.srcDir(project.file("src/integration/resources"))
+            kotlin.srcDir(project.file("src/integration/kotlin"))
+//            compileClasspath.plus(sourceSets["main"].output)
+//            runtimeClasspath.plus(sourceSets["main"].output)
+        }
+    }
+}
+
+
+tasks.register("integration") {
+    description = "Runs integration tests."
+    group = "verification"
+    shouldRunAfter("test")
+}
+
+configurations.create("integration")
+    .extendsFrom(configurations["testImplementation"])
+    .extendsFrom(configurations["testRuntime"])
+
+tasks.named("check") {
+    dependsOn("integration")
 }

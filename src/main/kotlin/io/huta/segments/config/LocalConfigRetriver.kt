@@ -7,11 +7,11 @@ import io.vertx.core.Vertx
 import io.vertx.core.json.JsonObject
 
 fun configRetriever(vertx: Vertx, name: String): ConfigRetriever = ConfigRetriever.create(
-        vertx,
-        ConfigRetrieverOptions().addStore(configStoreOpts(name))
+    vertx,
+    ConfigRetrieverOptions().addStore(configStoreOpts(name))
 )
 
 private fun configStoreOpts(fileName: String): ConfigStoreOptions = ConfigStoreOptions()
-        .setFormat("json")
-        .setType("file")
-        .setConfig(JsonObject().put("path", "conf/$fileName.json"))
+    .setFormat("json")
+    .setType("file")
+    .setConfig(JsonObject().put("path", "conf/$fileName.json"))

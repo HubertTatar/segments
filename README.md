@@ -13,6 +13,7 @@
     - https://vertx.io/docs/vertx-core/java/
     - https://vertx.io/docs/vertx-core/kotlin/    
     - https://vertx.io/docs/guide-for-java-devs/
+    - https://kotlinlang.org/docs/reference/building-mpp-with-gradle.html
     
     
 

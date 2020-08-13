@@ -22,4 +22,5 @@ test-results
 test-tmp
 *.class
 *.swp
-logs
+logs/
+conf/

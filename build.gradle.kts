@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm") version "1.3.72"
     id("org.jlleitschuh.gradle.ktlint") version "9.3.0"
+    id("idea")
 }
 
 group = "io.huta"
@@ -22,7 +23,6 @@ val hamcrestVersion = "2.0.0.0"
 val junitRunnerVersion = "1.6.2"
 val junitVersion = "5.6.2"
 val restAssuredVersion = "4.2.0"
-
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
@@ -52,23 +52,30 @@ tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions.jvmTarget = "1.8"
     kotlinOptions.allWarningsAsErrors = true
 }
+sourceSets.create("integration")
 
 kotlin {
     sourceSets {
-        val integration by creating {
+        val main by getting {}
+        val integration by getting {
             resources.srcDir(project.file("src/integration/resources"))
             kotlin.srcDir(project.file("src/integration/kotlin"))
-//            compileClasspath.plus(sourceSets["main"].output)
-//            runtimeClasspath.plus(sourceSets["main"].output)
+            dependencies {
+                implementation("org.junit.platform:junit-platform-runner:$junitRunnerVersion")
+                implementation("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
+                implementation("org.junit.jupiter:junit-jupiter-params:$junitVersion")
+            }
         }
+        integration.dependsOn(main)
     }
 }
 
-
-tasks.register("integration") {
+tasks.register("integration", Test::class.java) {
     description = "Runs integration tests."
     group = "verification"
     shouldRunAfter("test")
+    testClassesDirs = sourceSets["integration"].output.classesDirs
+    classpath = sourceSets["integration"].runtimeClasspath
 }
 
 configurations.create("integration")

@@ -22,14 +22,14 @@ open class PlayerVerticleTest {
     var vertx: Vertx? = null
 
     @BeforeAll
-    fun setup(ctx: VertxTestContext) {
+    fun setup() {
         vertx = Vertx.vertx()
-        vertx?.deployVerticle(PlayerVerticle(ServerProperties(8080)), ctx.completing())
+        vertx?.deployVerticle(PlayerVerticle(ServerProperties(8080)))
     }
 
     @AfterAll
-    fun clean(ctx: VertxTestContext) {
-        vertx?.close(ctx.completing())
+    fun clean() {
+        vertx?.close()
     }
 
     @Test
@@ -40,7 +40,7 @@ open class PlayerVerticleTest {
             .`as`(BodyCodec.string())
             .send(ctx.succeeding { resp ->
                 ctx.verify {
-                    Assertions.assertTrue(resp.toString().contains("JohnDoe"))
+                    Assertions.assertTrue(resp.body().toString().contains("JohnDoe"))
                     ctx.completeNow()
                 }
             })

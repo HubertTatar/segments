@@ -22,6 +22,7 @@
     - https://www.journaldev.com/20834/junit5-tutorial
     - https://vertx.io/docs/vertx-unit/java/
     - https://vertx.io/docs/vertx-junit5/java/
+    - https://vertx.io/docs/vertx-web-client/java/
     
     
 

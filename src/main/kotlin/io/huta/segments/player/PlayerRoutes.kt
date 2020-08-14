@@ -10,9 +10,7 @@ import io.vertx.ext.web.Router
 class PlayerRoutes(private val router: Router, private val vertx: Vertx) {
 
     init {
-        router.mountSubRouter("/player", PlayerRouter(vertx,
-            PlayerConfig()
-        ))
+        router.mountSubRouter("/player", PlayerRouter(vertx, PlayerConfig()))
         router.mountSubRouter("/player/purchase", PlayerPurchaseRouter(vertx, PlayerPurchaseConfig()))
     }
 }

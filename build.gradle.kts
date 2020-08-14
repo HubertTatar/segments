@@ -55,6 +55,8 @@ tasks.withType<KotlinCompile>().configureEach {
 
 sourceSets.create("integration")
 
+val mainJ = sourceSets["main"].output
+
 kotlin {
     sourceSets {
         val main by getting {}
@@ -65,6 +67,7 @@ kotlin {
                 implementation("org.junit.platform:junit-platform-runner:$junitRunnerVersion")
                 implementation("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
                 implementation("org.junit.jupiter:junit-jupiter-params:$junitVersion")
+                implementation(mainJ)
             }
         }
         integration.dependsOn(main)
@@ -85,4 +88,8 @@ configurations.create("integration")
 
 tasks.named("check") {
     dependsOn("integration")
+}
+
+ktlint {
+    disabledRules.set(setOf("import-ordering"))
 }

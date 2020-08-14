@@ -1,9 +1,10 @@
-package io.huta.segments
+package io.huta.segments.player
 
+import io.huta.segments.IntegrationBaseSpec
 import org.junit.Test
 import org.junit.jupiter.api.Assertions
 
-class IntegrationSpec {
+class CreatePlayerSpec : IntegrationBaseSpec() {
 
     @Test
     fun test() {

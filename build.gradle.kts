@@ -28,6 +28,9 @@ dependencies {
     implementation("io.vertx:vertx-core:$vertxVersion")
     implementation("io.vertx:vertx-web:$vertxVersion")
     implementation("io.vertx:vertx-config:$vertxVersion")
+    implementation("io.vertx:vertx-unit:$vertxVersion")
+    implementation("io.vertx:vertx-junit5:$vertxVersion")
+    implementation("io.vertx:vertx-junit5-web-client:4.0.0-milestone4")
 
     implementation("io.arrow-kt:arrow-core:$arrowVersion")
     implementation("io.arrow-kt:arrow-syntax:$arrowVersion")

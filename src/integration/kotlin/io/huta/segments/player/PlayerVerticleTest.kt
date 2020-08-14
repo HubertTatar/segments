@@ -21,25 +21,27 @@ class PlayerVerticleTest : IntegrationBaseSpec() {
     fun getPlayer(ctx: VertxTestContext) {
         client().get(8080, "localhost", "/player")
             .`as`(BodyCodec.string())
-            .send(ctx.succeeding { resp ->
-                ctx.verify {
-                    Assertions.assertTrue(resp.body().toString().contains("JohnDoe"))
-                    ctx.completeNow()
+            .send(
+                ctx.succeeding { resp ->
+                    ctx.verify {
+                        Assertions.assertTrue(resp.body().toString().contains("JohnDoe"))
+                        ctx.completeNow()
+                    }
                 }
-            })
+            )
     }
 
     @Test
     fun createPlayer(ctx: VertxTestContext) {
-        //given
+        // given
         val cmd = CreatePlayerCmd()
         cmd.mail = "johnDoe@mail.com"
         cmd.name = "JognDoe"
 
-        //when
+        // when
         client().post(8080, "localhost", "/player")
             .sendJson(cmd) { async ->
-        //then
+                // then
                 if (async.succeeded()) {
                     ctx.verify {
                         Assertions.assertEquals(async.result().statusCode(), 200)
@@ -50,5 +52,4 @@ class PlayerVerticleTest : IntegrationBaseSpec() {
                 }
             }
     }
-
 }

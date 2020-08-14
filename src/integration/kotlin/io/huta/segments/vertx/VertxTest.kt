@@ -43,22 +43,27 @@ class VertxTest {
 
         WebClient.create(vertx).get(16968, "localhost", "/")
             .`as`(BodyCodec.string())
-            .send(ctx.succeeding { resp ->
-                ctx.verify {
-                    Assertions.assertTrue(resp.body() == "Plop")
-                    ctx.completeNow()
+            .send(
+                ctx.succeeding { resp ->
+                    ctx.verify {
+                        Assertions.assertTrue(resp.body() == "Plop")
+                        ctx.completeNow()
+                    }
                 }
-            })
+            )
     }
 
     @Test
     fun testDeployment() {
         val ctx = VertxTestContext()
         val vertx = Vertx.vertx()
-        vertx.deployVerticle(EmptyVerticle(), ctx.succeeding { id ->
-            println(id)
-            ctx.completeNow()
-        })
+        vertx.deployVerticle(
+            EmptyVerticle(),
+            ctx.succeeding { id ->
+                println(id)
+                ctx.completeNow()
+            }
+        )
         Assertions.assertTrue(ctx.awaitCompletion(20, TimeUnit.SECONDS))
         if (ctx.failed()) {
             throw ctx.causeOfFailure()
@@ -66,4 +71,4 @@ class VertxTest {
     }
 }
 
-class EmptyVerticle : AbstractVerticle() {}
+class EmptyVerticle : AbstractVerticle()

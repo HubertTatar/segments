@@ -1,4 +1,4 @@
-package io.huta.segments.player.player.domain.model
+package io.huta.segments.player.player.domain
 
 import java.util.UUID
 

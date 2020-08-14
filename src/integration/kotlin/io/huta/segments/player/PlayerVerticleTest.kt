@@ -16,7 +16,22 @@ import java.util.concurrent.TimeUnit
 @ExtendWith(VertxExtension::class)
 class PlayerVerticleTest : IntegrationBaseSpec() {
 
-    @Test
+    @Test // TODO add validation for valida uuid
+    @Timeout(value = 10, timeUnit = TimeUnit.SECONDS)
+    fun getPlayerNoPlayer(ctx: VertxTestContext) {
+        client().get(8080, "localhost", "/player/5f9e6971-b596-4822-937f-6bc0b0465a04")
+            .`as`(BodyCodec.string())
+            .send(
+                ctx.succeeding { resp ->
+                    ctx.verify {
+                        Assertions.assertEquals(resp.statusCode(), 404)
+                        ctx.completeNow()
+                    }
+                }
+            )
+    }
+
+//    @Test // TODO
     @Timeout(value = 10, timeUnit = TimeUnit.SECONDS)
     fun getPlayer(ctx: VertxTestContext) {
         client().get(8080, "localhost", "/player")

@@ -1,5 +1,6 @@
 package io.huta.segments.player.player
 
+import io.huta.segments.player.player.config.PlayerConfig
 import io.vertx.core.Vertx
 import io.vertx.ext.web.handler.BodyHandler
 import io.vertx.ext.web.impl.RouterImpl

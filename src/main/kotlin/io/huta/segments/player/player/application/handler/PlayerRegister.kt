@@ -1,7 +1,7 @@
-package io.huta.segments.player.player.handler
+package io.huta.segments.player.player.application.handler
 
 import io.huta.segments.infrastructure.web.ResponseErrorBody
-import io.huta.segments.player.player.domain.api.CreatePlayerCmd
+import io.huta.segments.player.player.application.command.CreatePlayerCmd
 import io.vertx.core.Handler
 import io.vertx.core.json.Json
 import io.vertx.ext.web.RoutingContext

@@ -1,6 +1,6 @@
-package io.huta.segments.player.player.handler
+package io.huta.segments.player.player.application.query
 
-import io.huta.segments.player.player.domain.model.Player
+import io.huta.segments.player.player.api.dto.PlayerDto
 import io.vertx.core.Handler
 import io.vertx.core.http.impl.MimeMapping
 import io.vertx.core.json.Json
@@ -12,6 +12,6 @@ class PlayerGet : Handler<RoutingContext> {
     override fun handle(event: RoutingContext) {
         event.response()
             .putHeader("content-type", MimeMapping.getMimeTypeForExtension("json"))
-            .end(Json.encode(Player(UUID.randomUUID())))
+            .end(Json.encode(PlayerDto(UUID.randomUUID(), "JohnDoe", "mail@mail.com")))
     }
 }

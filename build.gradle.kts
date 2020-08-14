@@ -52,6 +52,7 @@ tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions.jvmTarget = "1.8"
     kotlinOptions.allWarningsAsErrors = true
 }
+
 sourceSets.create("integration")
 
 kotlin {

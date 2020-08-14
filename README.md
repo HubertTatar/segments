@@ -6,7 +6,7 @@
     
 ### 2. Tests
     - integration with Travis-CI
-    - tests in separated sourceSets integration and tests     
+    - tests in separated sourceSets integration and tests    
     
 ### Postman
     see collection/readme in postman dir    
@@ -17,6 +17,7 @@
     - https://vertx.io/docs/vertx-core/kotlin/    
     - https://vertx.io/docs/guide-for-java-devs/
     - https://kotlinlang.org/docs/reference/building-mpp-with-gradle.html
+    - https://www.journaldev.com/20834/junit5-tutorial
     
     
 

@@ -8,7 +8,10 @@ import io.vertx.core.Vertx
 import io.vertx.core.VertxOptions
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS
 
+@TestInstance(PER_CLASS)
 open class IntegrationBaseSpec {
 
     var vertx: Vertx? = null

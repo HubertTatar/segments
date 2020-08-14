@@ -51,6 +51,12 @@ tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions.allWarningsAsErrors = true
 }
 
+/*
+    `val integration by getting` was not correctly registering sourceSet,
+     gradle was not detecting `integration` sourceSet - thus `sourceSets.create("integration")`
+     sourceSets.create("integration") create SourceSet and it is not able to configure kotlin
+     `val integration by getting` create KotlinSourceSet and allows to configure Kotlin
+ */
 sourceSets.create("integration")
 
 val mainJ = sourceSets["main"].output
@@ -87,6 +93,23 @@ tasks.named("check") {
     dependsOn("integration")
 }
 
+/*
+    without it gradle doesn't detect any @Test methods
+ */
+tasks.named<Test>("test") {
+    useJUnitPlatform()
+}
+
+/*
+    without it gradle doesn't detect any @Test methods
+ */
+tasks.named<Test>("integration") {
+    useJUnitPlatform()
+}
+
+/*
+    Disable import ordering rule, IDEA is enough
+ */
 ktlint {
     disabledRules.set(setOf("import-ordering"))
 }

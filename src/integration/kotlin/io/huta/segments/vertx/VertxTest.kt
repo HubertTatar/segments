@@ -1,4 +1,4 @@
-package io.huta.segments.player
+package io.huta.segments.vertx
 
 import io.vertx.core.AbstractVerticle
 import io.vertx.core.Vertx

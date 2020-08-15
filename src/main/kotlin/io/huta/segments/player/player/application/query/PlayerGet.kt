@@ -34,30 +34,16 @@ class PlayerGet(
         event.response().setStatusCode(resp.first).end(Json.encode(resp.second))
     }
 
-    private fun handleSuccess(player: Player) = okResponse(player)
+    private fun handleSuccess(player: Player) =
+        Pair(200, PlayerDto(player.uuid, player.name, player.mail))
 
     private fun handleError(ex: Throwable) =
         when (ex) {
-            is UuidAbsent -> noUuidResponse()
-            is InvalidUuidFormat -> notValidUuidResponse()
-            is PlayerNotFound -> noPlayerResponse()
-            else -> nokResponse()
+            is UuidAbsent -> Pair(400, ResponseErrorBody("No uuid passed in url"))
+            is InvalidUuidFormat -> Pair(400, ResponseErrorBody("No uuid passed in url"))
+            is PlayerNotFound -> Pair(404, ResponseErrorBody("No player with uuid present"))
+            else -> Pair(500, ResponseErrorBody("Unkonwn error"))
         }
-
-    private fun okResponse(pl: Player) =
-        Pair(200, PlayerDto(pl.uuid, pl.name, pl.mail))
-
-    private fun nokResponse() =
-        Pair(500, ResponseErrorBody("Unkonwn error"))
-
-    private fun noPlayerResponse() =
-        Pair(404, ResponseErrorBody("No player with uuid present"))
-
-    private fun noUuidResponse() =
-        Pair(400, ResponseErrorBody("No uuid passed in url"))
-
-    private fun notValidUuidResponse() =
-        Pair(400, ResponseErrorBody("No uuid passed in url"))
 
     private fun fetch(uuid: UUID): Either<Throwable, Player> =
         playerRepository.fetch(uuid).result()?.let {

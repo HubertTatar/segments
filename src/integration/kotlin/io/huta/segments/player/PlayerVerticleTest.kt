@@ -1,7 +1,7 @@
 package io.huta.segments.player
 
 import io.huta.segments.IntegrationBaseSpec
-import io.huta.segments.player.player.application.command.CreatePlayerCmd
+import io.huta.segments.player.player.api.command.CreatePlayerCmd
 import io.vertx.ext.web.codec.BodyCodec
 import io.vertx.junit5.Timeout
 import io.vertx.junit5.VertxExtension

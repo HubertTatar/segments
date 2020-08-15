@@ -1,8 +1,8 @@
 package io.huta.segments.player.player.application.handler
 
 import io.huta.segments.infrastructure.web.ResponseErrorBody
+import io.huta.segments.player.player.api.command.CreatePlayerCmd
 import io.huta.segments.player.player.api.dto.PlayerDto
-import io.huta.segments.player.player.application.command.CreatePlayerCmd
 import io.huta.segments.player.player.domain.Player
 import io.huta.segments.player.player.domain.PlayerRepository
 import io.vertx.core.Handler
@@ -16,8 +16,8 @@ class PlayerRegister(private val playerRepository: PlayerRepository) : Handler<R
 
     override fun handle(event: RoutingContext) {
         runCatching { Json.decodeValue(event.bodyAsString, CreatePlayerCmd::class.java) }
-            .map { validate(it) }
-            .map { save(it) }
+            .map { cmd -> validate(cmd) }
+            .map { player -> save(player) }
             .map { dto -> event.response().setStatusCode(200).end(Json.encode(dto)) }
             .onFailure { ex ->
                 log.error("<Player>", ex)
@@ -25,13 +25,13 @@ class PlayerRegister(private val playerRepository: PlayerRepository) : Handler<R
             }
     }
 
-    fun validate(cmd: CreatePlayerCmd): Player {
+    private fun validate(cmd: CreatePlayerCmd): Player {
         val name = cmd.name ?: throw IllegalArgumentException("")
         val mail = cmd.mail ?: throw IllegalArgumentException("")
         return Player(UUID.randomUUID(), name, mail)
     }
 
-    fun save(player: Player): PlayerDto {
+    private fun save(player: Player): PlayerDto {
         playerRepository.insert(player.uuid, player)
         log.info("created")
         return PlayerDto(player.uuid, player.name, player.mail)

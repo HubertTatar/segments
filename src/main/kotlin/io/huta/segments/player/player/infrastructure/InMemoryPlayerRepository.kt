@@ -1,4 +1,4 @@
-package io.huta.segments.infrastructure.repository.player
+package io.huta.segments.player.player.infrastructure
 
 import io.huta.segments.infrastructure.repository.InMemoryRepository
 import io.huta.segments.player.player.domain.Player

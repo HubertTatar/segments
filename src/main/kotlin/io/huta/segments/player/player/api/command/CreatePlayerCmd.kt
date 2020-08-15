@@ -1,4 +1,4 @@
-package io.huta.segments.player.player.application.command
+package io.huta.segments.player.player.api.command
 
 class CreatePlayerCmd {
     var name: String? = null

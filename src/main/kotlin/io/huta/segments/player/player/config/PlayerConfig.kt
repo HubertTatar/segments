@@ -1,6 +1,6 @@
 package io.huta.segments.player.player.config
 
-import io.huta.segments.infrastructure.repository.player.InMemoryPlayerRepository
+import io.huta.segments.player.player.infrastructure.InMemoryPlayerRepository
 import io.huta.segments.player.player.application.query.PlayerGet
 import io.huta.segments.player.player.application.handler.PlayerRegister
 import io.huta.segments.player.player.domain.Player
@@ -10,7 +10,8 @@ import kotlin.collections.HashMap
 
 class PlayerConfig {
 
-    fun playerRepository(): PlayerRepository = InMemoryPlayerRepository(HashMap<UUID, Player>())
+    fun playerRepository(): PlayerRepository =
+        InMemoryPlayerRepository(HashMap<UUID, Player>())
 
     fun playerGet() = PlayerGet(playerRepository())
 

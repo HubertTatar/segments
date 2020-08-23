@@ -1,11 +1,11 @@
 package io.huta.segments.player.player.domain
 
-import io.vertx.core.AsyncResult
+import arrow.fx.IO
 import java.util.UUID
 
 interface PlayerRepository {
-    fun insert(key: UUID, value: Player): AsyncResult<Player>
-    fun fetch(key: UUID): AsyncResult<Player?>
-    fun delete(key: UUID): AsyncResult<Player?>
-    fun update(key: UUID, value: Player): AsyncResult<Player?>
+    fun insert(key: UUID, value: Player): IO<Player>
+    fun fetch(key: UUID): IO<Player?>
+    fun delete(key: UUID): IO<Player?>
+    fun update(key: UUID, value: Player): IO<Player?>
 }

@@ -1,5 +1,7 @@
 package io.huta.segments.player.player.application.handler
 
+import arrow.core.Either
+import arrow.fx.IO
 import io.huta.segments.infrastructure.web.ResponseErrorBody
 import io.huta.segments.player.player.api.command.CreatePlayerCmd
 import io.huta.segments.player.player.api.dto.PlayerDto
@@ -18,7 +20,16 @@ class PlayerRegister(private val playerRepository: PlayerRepository) : Handler<R
         runCatching { Json.decodeValue(event.bodyAsString, CreatePlayerCmd::class.java) }
             .map { cmd -> validate(cmd) }
             .map { player -> save(player) }
-            .map { dto -> event.response().setStatusCode(200).end(Json.encode(dto)) }
+            .map { ioDto ->
+                log.info("mapping")
+                ioDto.unsafeRunAsync { either ->
+                    log.info("unsafe")
+                    when (either) {
+                        is Either.Right -> event.response().setStatusCode(200).end(Json.encode(either.b))
+                        is Either.Left -> event.response().setStatusCode(500).end(Json.encode(either.a))
+                    }
+                }
+            }
             .onFailure { ex ->
                 log.error("<Player>", ex)
                 event.response().setStatusCode(500).end(Json.encode(ResponseErrorBody(ex.message ?: "error")))
@@ -26,15 +37,18 @@ class PlayerRegister(private val playerRepository: PlayerRepository) : Handler<R
     }
 
     private fun validate(cmd: CreatePlayerCmd): Player {
+        log.info("validating")
         val name = cmd.name ?: throw IllegalArgumentException("")
         val mail = cmd.mail ?: throw IllegalArgumentException("")
         return Player(UUID.randomUUID(), name, mail)
     }
 
-    private fun save(player: Player): PlayerDto {
-        playerRepository.insert(player.uuid, player)
-        log.info("created")
-        return PlayerDto(player.uuid, player.name, player.mail)
+    private fun save(player: Player): IO<PlayerDto> {
+        return playerRepository.insert(player.uuid, player)
+            .map { p ->
+                log.info("created")
+                PlayerDto(p.uuid, p.name, p.mail)
+            }
     }
 
     companion object {

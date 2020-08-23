@@ -8,9 +8,9 @@ import io.vertx.ext.web.impl.RouterImpl
 class PlayerRouter(vertx: Vertx, playerConfig: PlayerConfig) : RouterImpl(vertx) {
 
     init {
-        get("/:uuid").handler(playerConfig.playerGet())
+        get("/:uuid").handler(playerConfig.playerGet)
 
         route("/").handler(BodyHandler.create())
-        post("/").handler(playerConfig.registerPlayer())
+        post("/").handler(playerConfig.registerPlayer)
     }
 }

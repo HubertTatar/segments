@@ -1,8 +1,14 @@
 package io.huta.segments.player.player.infrastructure
 
+import io.huta.segments.infrastructure.repository.InMemoryHandlerRepository
 import io.huta.segments.infrastructure.repository.InMemoryRepository
 import io.huta.segments.player.player.domain.Player
 import io.huta.segments.player.player.domain.PlayerRepository
-import java.util.UUID
+import io.vertx.core.Handler
+import io.vertx.core.Promise
+import io.vertx.core.spi.FutureFactory
+import java.util.*
 
-class InMemoryPlayerRepository(map: MutableMap<UUID, Player>) : InMemoryRepository<UUID, Player>(map), PlayerRepository
+class InMemoryPlayerRepository(
+    inMemoryHandlerRepository: InMemoryHandlerRepository<UUID, Player>
+) : InMemoryRepository<UUID, Player>(inMemoryHandlerRepository), PlayerRepository

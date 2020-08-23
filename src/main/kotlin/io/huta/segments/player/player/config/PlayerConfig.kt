@@ -1,19 +1,17 @@
 package io.huta.segments.player.player.config
 
-import io.huta.segments.player.player.infrastructure.InMemoryPlayerRepository
-import io.huta.segments.player.player.application.query.PlayerGet
+import io.huta.segments.infrastructure.repository.InMemoryHandlerRepository
 import io.huta.segments.player.player.application.handler.PlayerRegister
-import io.huta.segments.player.player.domain.Player
+import io.huta.segments.player.player.application.query.PlayerGet
 import io.huta.segments.player.player.domain.PlayerRepository
-import java.util.UUID
-import kotlin.collections.HashMap
+import io.huta.segments.player.player.infrastructure.InMemoryPlayerRepository
 
 class PlayerConfig {
 
-    fun playerRepository(): PlayerRepository =
-        InMemoryPlayerRepository(HashMap<UUID, Player>())
+    private val playerRepository: PlayerRepository =
+        InMemoryPlayerRepository(InMemoryHandlerRepository(HashMap()))
 
-    fun playerGet() = PlayerGet(playerRepository())
+    val playerGet = PlayerGet(playerRepository)
 
-    fun registerPlayer() = PlayerRegister(playerRepository())
+    val registerPlayer = PlayerRegister(playerRepository)
 }

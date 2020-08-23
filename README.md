@@ -23,6 +23,9 @@
     - https://vertx.io/docs/vertx-unit/java/
     - https://vertx.io/docs/vertx-junit5/java/
     - https://vertx.io/docs/vertx-web-client/java/
+#### Other
+    - http://escoffier.me/vertx-hol/
+    - https://apifriends.com/api-streaming/vert-x-and-the-async-calls-chain/
     
     
 
